@@ -1,0 +1,47 @@
+{
+    "name": "codezero/composer-preload-files",
+    "description": "Composer plugin to autoload files before vendor files.",
+    "keywords": [
+        "composer",
+        "plugin",
+        "load",
+        "include",
+        "require",
+        "autoload",
+        "files",
+        "helpers"
+    ],
+    "type": "composer-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ivan Vermeyen",
+            "email": "ivan@codezero.be"
+        }
+    ],
+    "require": {
+        "php": ">= 7.0",
+        "composer-plugin-api": "^2.0"
+    },
+    "require-dev": {
+        "composer/composer": "^2.0"
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "autoload": {
+        "psr-4": {
+            "CodeZero\\ComposerPreloadFiles\\": "src"
+        }
+    },
+    "extra": {
+        "class": "CodeZero\\ComposerPreloadFiles\\Plugin"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
