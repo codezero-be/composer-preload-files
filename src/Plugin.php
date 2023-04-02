@@ -6,6 +6,8 @@ use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
+use Composer\Script\ScriptEvents;
+use Composer\Util\Filesystem;
 
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
@@ -24,6 +26,13 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     protected $io;
 
     /**
+     * Tells if plugin has run.
+     *
+     * @var bool
+     */
+    protected $done;
+
+    /**
      * Returns an array of event names this subscriber wants to listen to.
      *
      * @return array
@@ -31,8 +40,28 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            //
+            ScriptEvents::POST_AUTOLOAD_DUMP => 'addPreloadFilesToAutoloadFiles',
+            ScriptEvents::POST_INSTALL_CMD => 'addPreloadFilesToAutoloadFiles',
         ];
+    }
+
+    /**
+     * Add preload files to the autoload files.
+     *
+     * @return void
+     */
+    public function addPreloadFilesToAutoloadFiles()
+    {
+        // Run only once if multiple events trigger.
+        if ($this->done === true) {
+            return;
+        }
+
+        $this->done = true;
+
+        $filesystem = new Filesystem();
+        $generator = new AutoloadGenerator($this->composer->getEventDispatcher(), $this->io);
+        $generator->addPreloadFilesToAutoloadFiles($this->composer, $this->io, $filesystem);
     }
 
     /**
