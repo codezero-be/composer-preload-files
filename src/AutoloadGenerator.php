@@ -147,11 +147,11 @@ class AutoloadGenerator extends ComposerAutoloadGenerator
         $otherPackages = $composer->getRepositoryManager()->getLocalRepository()->getCanonicalPackages();
 
         foreach ($otherPackages as $package) {
-            if ( ! ($package instanceof CompletePackage)) {
+            if ( ! ($package instanceof CompletePackage) || strtolower($package->getType()) === 'metapackage') {
                 continue;
             }
 
-            $packageBaseDir = $filesystem->normalizePath($installationManager->getInstallPath($package) ?? '');
+            $packageBaseDir = $filesystem->normalizePath($installationManager->getInstallPath($package));
             $packageConfig = $package->getExtra();
             $packagePreloadFiles = $packageConfig[$preloadFilesKey] ?? [];
 
