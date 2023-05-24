@@ -151,7 +151,7 @@ class AutoloadGenerator extends ComposerAutoloadGenerator
                 continue;
             }
 
-            $packageBaseDir = $filesystem->normalizePath($installationManager->getInstallPath($package));
+            $packageBaseDir = $filesystem->normalizePath($installationManager->getInstallPath($package) ?? '');
             $packageConfig = $package->getExtra();
             $packagePreloadFiles = $packageConfig[$preloadFilesKey] ?? [];
 
