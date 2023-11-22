@@ -14,7 +14,7 @@ Because maintenance of these packages appears to be stalled, I decided to attemp
 ## ✅ Requirements
 
 - PHP >= 7.0
-- Composer ^2.0
+- Composer ^2.3
 
 ## 📦 Install
 
